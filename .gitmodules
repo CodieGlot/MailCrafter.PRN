@@ -1,9 +1,12 @@
 [submodule "MailCrafter.Worker"]
 	path = MailCrafter.Worker
 	url = https://github.com/CodieGlot/MailCrafter.Worker.git
+ 	branch = main
 [submodule "MailCrafter.MVC"]
 	path = MailCrafter.MVC
 	url = https://github.com/CodieGlot/MailCrafter.MVC.git
+ 	branch = main
 [submodule "MailCrafter.Core"]
 	path = MailCrafter.Core
 	url = https://github.com/CodieGlot/MailCrafter.Core.git
+ 	branch = main
