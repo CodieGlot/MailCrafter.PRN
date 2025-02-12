@@ -10,3 +10,7 @@
 	path = MailCrafter.Core
 	url = https://github.com/CodieGlot/MailCrafter.Core.git
  	branch = main
+[submodule "MailCrafter.API"]
+	path = MailCrafter.API
+	url = https://github.com/CodieGlot/MailCrafter.API.git
+	branch = main
