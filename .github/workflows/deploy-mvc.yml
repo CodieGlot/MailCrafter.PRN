@@ -1,0 +1,52 @@
+name: Build and Deploy MailCrafter.MVC to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOTNET_VERSION: "8.0"
+  AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AppSuite repo with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Update all submodules to latest main branches
+        run: |
+          git submodule foreach '
+            echo "Pulling latest main for $name"
+            git fetch origin main
+            git checkout origin/main
+          '
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore MailCrafter.MVC/MailCrafter.MVC.csproj
+
+      - name: Build
+        run: dotnet build MailCrafter.MVC/MailCrafter.MVC.csproj --configuration Release --no-restore
+
+      - name: Run tests (optional)
+        run: dotnet test MailCrafter.MVC/MailCrafter.MVC.csproj --no-build --verbosity normal
+
+      - name: Publish MVC project
+        run: dotnet publish MailCrafter.MVC/MailCrafter.MVC.csproj -c Release -o published
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: published
