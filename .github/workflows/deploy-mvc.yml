@@ -33,16 +33,16 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
-        run: dotnet restore MailCrafter.MVC/MailCrafter.MVC.csproj
+        run: dotnet restore MailCrafter.MVC/MailCrafter.MVC/MailCrafter.MVC.csproj
 
       - name: Build
-        run: dotnet build MailCrafter.MVC/MailCrafter.MVC.csproj --configuration Release --no-restore
+        run: dotnet build MailCrafter.MVC/MailCrafter.MVC/MailCrafter.MVC.csproj --configuration Release --no-restore
 
       - name: Run tests (optional)
-        run: dotnet test MailCrafter.MVC/MailCrafter.MVC.csproj --no-build --verbosity normal
+        run: dotnet test MailCrafter.MVC/MailCrafter.MVC/MailCrafter.MVC.csproj --no-build --verbosity normal
 
       - name: Publish MVC project
-        run: dotnet publish MailCrafter.MVC/MailCrafter.MVC.csproj -c Release -o published
+        run: dotnet publish MailCrafter.MVC/MailCrafter.MVC/MailCrafter.MVC.csproj -c Release -o published
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
